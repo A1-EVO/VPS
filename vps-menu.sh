@@ -67,7 +67,7 @@ while true; do
     case "$choice" in
         1) update_repos ;;
         12) install_3xui ;;
-        12) open_3xui ;;
+        13) open_3xui ;;
         98) update_script ;;
         99) remove_script ;;
         0) exit 0 ;;
