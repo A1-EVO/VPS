@@ -14,7 +14,7 @@ update_repos() {
 
 install_3xui() {
     echo -e "${GREEN}Устанавливаю 3x-ui...${NC}"
-    bash <(curl -Ls https://raw.githubusercontent.com/MHSanaei/3x-ui/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
 }
 
 update_script() {
