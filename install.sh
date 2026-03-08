@@ -9,7 +9,7 @@ INSTALL_DIR="/usr/local/vps-menu"
 mkdir -p "$INSTALL_DIR"
 
 # Качаем последнюю версию из GitHub
-curl -L https://raw.githubusercontent.com/A1-EVO/VPS/main/vps-menu.sh -o "$INSTALL_DIR/vps-menu.sh"
+curl -L "https://raw.githubusercontent.com/A1-EVO/VPS/main/vps-menu.sh?$(date +%s)" -o "$INSTALL_DIR/vps-menu.sh"
 
 # Делаем исполняемым
 chmod +x "$INSTALL_DIR/vps-menu.sh"
