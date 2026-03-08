@@ -48,7 +48,7 @@ while true; do
     echo "12) Установить 3x-ui"
     echo "98) Обновить скрипт с GitHub"
     echo "99) Удалить скрипт"
-    echo "0) Выходfffffffffffff"
+    echo "0) Выход"
     echo
     read -p "Выберите действие: " choice
 
