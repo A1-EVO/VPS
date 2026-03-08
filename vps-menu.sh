@@ -19,8 +19,15 @@ install_3xui() {
 
 update_script() {
     echo -e "${GREEN}Обновляю скрипт с GitHub...${NC}"
-    curl -L https://raw.githubusercontent.com/A1-EVO/VPS/main/vps-menu.sh -o /usr/local/vps-menu/vps-menu.sh
+
+    TS=$(date +%s)
+    RAND=$RANDOM
+
+    curl -L "https://raw.githubusercontent.com/A1-EVO/VPS/main/vps-menu.sh?$TS-$RAND" \
+        -o /usr/local/vps-menu/vps-menu.sh
+
     chmod +x /usr/local/vps-menu/vps-menu.sh
+
     echo -e "${GREEN}Скрипт обновлён! Перезапустите меню командой: start${NC}"
 }
 
@@ -41,7 +48,7 @@ while true; do
     echo "12) Установить 3x-ui"
     echo "98) Обновить скрипт с GitHub"
     echo "99) Удалить скрипт"
-    echo "0) ВыходЫ"
+    echo "0) Выход"
     echo
     read -p "Выберите действие: " choice
 
