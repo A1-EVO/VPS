@@ -33,10 +33,13 @@ update_script() {
 
     chmod +x /usr/local/vps-menu/vps-menu.sh
 
-    echo -e "${GREEN}Скрипт обновлён! Перезапуск...${NC}"
+    echo -e "${GREEN}Скрипт обновлён!${NC}"
+    echo
+    read -p "Нажмите Enter для перезапуска меню..."
 
     exec /usr/local/vps-menu/vps-menu.sh
 }
+
 
 remove_script() {
     echo -e "${RED}Удаляю скрипт...${NC}"
