@@ -34,6 +34,7 @@ update_script() {
     chmod +x /usr/local/vps-menu/vps-menu.sh
 
     echo -e "${GREEN}Скрипт обновлён! Перезапустите меню командой: start${NC}"
+    start
 }
 
 remove_script() {
@@ -52,6 +53,7 @@ while true; do
     echo "1) Обновить все репозитории"
     echo "12) Установить 3x-ui"
     echo "13) Открыть меню 3x-ui"
+    echo "13) Удалить 3x-ui"
     echo "98) Обновить скрипт с GitHub"
     echo "99) Удалить скрипт"
     echo "0) Выход"
