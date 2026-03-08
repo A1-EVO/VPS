@@ -17,6 +17,4 @@ chmod +x "$INSTALL_DIR/vps-menu.sh"
 # Создаём команду start
 ln -sf "$INSTALL_DIR/vps-menu.sh" /usr/local/bin/start
 
-echo "Ууууустановка завершена. Запускайте командой: start"
-
 start
