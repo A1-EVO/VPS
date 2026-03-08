@@ -38,10 +38,10 @@ while true; do
     clear
     echo -e "${GREEN}=== VPS A1 MENU ===${NC}"
     echo "1) Обновить все репозитории"
-    echo "12) Установить 3x-xui"
+    echo "12) Установить 3x-ui"
     echo "98) Обновить скрипт с GitHub"
     echo "99) Удалить скрипт"
-    echo "0) Выход"
+    echo "0) ВыходЫ"
     echo
     read -p "Выберите действие: " choice
 
