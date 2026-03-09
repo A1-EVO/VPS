@@ -17,7 +17,7 @@ draw_box() {
 }
 
 while true; do
-    clear
+    tput cup 0 0
 
     # CPU
     CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8"%"}')
@@ -49,7 +49,7 @@ while true; do
     fi
 
     # Рисуем панель
-    draw_box "RETRO SYSTEM PANEL"
+    draw_box "A1 RETRO SYSTEM PANEL"
 
     echo -e "${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU}${NC}"
     echo -e "${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}"
