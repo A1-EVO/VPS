@@ -12,6 +12,11 @@ update_repos() {
     apt update && apt upgrade -y
 }
 
+performance_status() {
+    echo -e "${GREEN}Запускаю диспечер...${NC}"
+    /usr/local/vps-menu/sys-panel.sh ;;
+}
+
 install_3xui() {
     echo -e "${GREEN}Устанавливаю 3x-ui...${NC}"
     bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
@@ -55,6 +60,7 @@ while true; do
     clear
     echo -e "${GREEN}=== VPS A1 MENU ===${NC}"
     echo "1) Обновить все репозитории"
+    echo "2) Диспечер нагрузки"
     echo "12) Установить 3x-ui"
     echo "13) Открыть меню 3x-ui"
     echo "14) Удалить 3x-ui"
@@ -66,6 +72,7 @@ while true; do
 
     case "$choice" in
         1) update_repos ;;
+        2) performance_status ;;
         12) install_3xui ;;
         13) open_3xui ;;
         98) update_script ;;
