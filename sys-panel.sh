@@ -59,7 +59,7 @@ while true; do
     echo -e "${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}"
 
     echo
-    echo -e "${CYAN}Обновление каждые 1 сек. Нажмите CTRL+C для выхода.${NC}"
+    echo -e "${CYAN}Нажмите CTRL+C для выхода.${NC}"
 
     sleep 1
 done
