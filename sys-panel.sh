@@ -61,5 +61,5 @@ while true; do
     echo
     echo -e "${CYAN}Нажмите CTRL+C для выхода.${NC}"
 
-    sleep 1
+    sleep 2
 done
