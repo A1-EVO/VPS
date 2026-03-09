@@ -83,9 +83,9 @@ while true; do
     # Панель
     draw_box "A1 RETRO SYSTEM PANEL"
 
-    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${STEAL_COLOR}${STEAL} st${NC}\n"
-    echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
-    echo -ne "\e[K${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
+    echo -ne "\e[K${BLUE}Процессор:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${STEAL_COLOR}${STEAL} ограничение CPU${NC}\n"
+    echo -ne "\e[K${BLUE}Оперативка:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
+    echo -ne "\e[K${BLUE}Память:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
     echo -ne "\n\e[K${CYAN}Нажмите CTRL+C для выхода.${NC}\n"
 
