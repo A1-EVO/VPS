@@ -26,9 +26,9 @@ while true; do
     # Перемещаем курсор в начало экрана
     tput cup 0 0
 
-    # CPU (моментальное значение)
-    CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8"%"}')
-    CPU_NUM=$(echo "$CPU" | tr -d '%')
+    # --- CPU: правильный парсинг idle ---
+    IDLE=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\) id.*/\1/")
+    CPU_NUM=$(echo "100 - $IDLE" | bc)
 
     # --- Сглаживание CPU по последним 10 значениям ---
     CPU_HISTORY+=("$CPU_NUM")
@@ -72,7 +72,7 @@ while true; do
     fi
 
     # Панель
-    draw_box "A1 RETRO SYSTEM PANEL среднее"
+    draw_box "A1 RETRO SYSTEM PANEL"
 
     echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC}\n"
     echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
