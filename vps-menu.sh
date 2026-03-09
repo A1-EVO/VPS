@@ -14,7 +14,7 @@ update_repos() {
 
 performance_status() {
     echo -e "${GREEN}Запускаю диспечер...${NC}"
-    /usr/local/vps-menu/sys-panel.sh ;
+    /usr/local/vps-menu/sys-panel.sh
 }
 
 install_3xui() {
