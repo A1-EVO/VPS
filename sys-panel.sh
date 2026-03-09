@@ -85,7 +85,7 @@ while true; do
 
     echo -ne "\e[K${BLUE}Процессор:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${STEAL_COLOR}${STEAL} ограничение CPU${NC}\n"
     echo -ne "\e[K${BLUE}Оперативка:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
-    echo -ne "\e[K${BLUE}Память:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
+    echo -ne "\e[K${BLUE}Память:     ${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
     echo -ne "\n\e[K${CYAN}Нажмите CTRL+C для выхода.${NC}\n"
 
