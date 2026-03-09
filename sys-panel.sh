@@ -72,7 +72,7 @@ while true; do
     fi
 
     # Панель
-    draw_box "A1 RETRO SYSTEM PANEL"
+    draw_box "A1 RETRO SYSTEM PANEL среднее"
 
     echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC}\n"
     echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
