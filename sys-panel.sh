@@ -32,6 +32,15 @@ while true; do
     # --- Steal time (st) ---
     STEAL=$(top -bn1 | grep "Cpu(s)" | sed "s/.* \([0-9.]*\) st.*/\1/")
 
+    # --- Цвет для st ---
+    if (( $(echo "$STEAL > 5" | bc -l) )); then
+        STEAL_COLOR=$RED
+    elif (( $(echo "$STEAL > 2" | bc -l) )); then
+        STEAL_COLOR=$YELLOW
+    else
+        STEAL_COLOR=$GREEN
+    fi
+
     # --- Сглаживание CPU по последним 5 значениям ---
     CPU_HISTORY+=("$CPU_NUM")
 
@@ -74,7 +83,7 @@ while true; do
     # Панель
     draw_box "A1 RETRO SYSTEM PANEL"
 
-    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${CPU_COLOR}${STEAL} st${NC}\n"
+    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${STEAL_COLOR}${STEAL} st${NC}\n"
     echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
     echo -ne "\e[K${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
