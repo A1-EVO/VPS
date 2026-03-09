@@ -33,8 +33,8 @@ while true; do
     # --- Сглаживание CPU по последним 10 значениям ---
     CPU_HISTORY+=("$CPU_NUM")
 
-    # Ограничиваем длину массива до 10
-    if [ ${#CPU_HISTORY[@]} -gt 10 ]; then
+    # Ограничиваем длину массива до 8
+    if [ ${#CPU_HISTORY[@]} -gt 8 ]; then
         CPU_HISTORY=("${CPU_HISTORY[@]:1}")
     fi
 
