@@ -23,29 +23,29 @@ draw_box() {
 CPU_HISTORY=()
 
 while true; do
-    # Перемещаем курсор в начало экрана
     tput cup 0 0
 
     # --- CPU: правильный парсинг idle ---
     IDLE=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\) id.*/\1/")
     CPU_NUM=$(echo "100 - $IDLE" | bc)
 
-    # --- Сглаживание CPU по последним 10 значениям ---
+    # --- Steal time (st) ---
+    STEAL=$(top -bn1 | grep "Cpu(s)" | sed "s/.* \([0-9.]*\) st.*/\1/")
+
+    # --- Сглаживание CPU по последним 8 значениям ---
     CPU_HISTORY+=("$CPU_NUM")
 
-    # Ограничиваем длину массива до 8
     if [ ${#CPU_HISTORY[@]} -gt 8 ]; then
         CPU_HISTORY=("${CPU_HISTORY[@]:1}")
     fi
 
-    # Считаем среднее
     CPU_SUM=0
     for v in "${CPU_HISTORY[@]}"; do
         CPU_SUM=$(echo "$CPU_SUM + $v" | bc)
     done
     CPU_AVG=$(echo "scale=1; $CPU_SUM / ${#CPU_HISTORY[@]}" | bc)
 
-    # Цвет CPU по среднему значению
+    # Цвет CPU
     if (( $(echo "$CPU_AVG > 80" | bc -l) )); then CPU_COLOR=$RED
     elif (( $(echo "$CPU_AVG > 50" | bc -l) )); then CPU_COLOR=$YELLOW
     else CPU_COLOR=$GREEN
@@ -74,7 +74,7 @@ while true; do
     # Панель
     draw_box "A1 RETRO SYSTEM PANEL"
 
-    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC}\n"
+    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${MAGENTA}${STEAL} st${NC}\n"
     echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
     echo -ne "\e[K${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
