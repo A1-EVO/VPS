@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Очистка экрана
+# Очистка экрана один раз
 tput clear
 
 # Цвета
@@ -14,12 +14,13 @@ NC="\e[0m"
 
 draw_box() {
     local title="$1"
-    echo -e "${MAGENTA}┌──────────────────────────────────────────────┐${NC}"
-    printf "${MAGENTA}│${NC} %-44s ${MAGENTA}│${NC}\n" "$title"
-    echo -e "${MAGENTA}└──────────────────────────────────────────────┘${NC}"
+    echo -ne "\e[K${MAGENTA}┌──────────────────────────────────────────────┐${NC}\n"
+    printf "\e[K${MAGENTA}│${NC} %-44s ${MAGENTA}│${NC}\n" "$title"
+    echo -ne "\e[K${MAGENTA}└──────────────────────────────────────────────┘${NC}\n"
 }
 
 while true; do
+    # Перемещаем курсор в начало экрана
     tput cup 0 0
 
     # CPU
@@ -51,15 +52,14 @@ while true; do
     else DISK_COLOR=$GREEN
     fi
 
-    # Рисуем панель
+    # Панель
     draw_box "A1 RETRO SYSTEM PANEL"
 
-    echo -e "${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU}${NC}"
-    echo -e "${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}"
-    echo -e "${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}"
+    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU}${NC}\n"
+    echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
+    echo -ne "\e[K${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
-    echo
-    echo -e "${CYAN}Нажмите CTRL+C для выхода.${NC}"
+    echo -ne "\n\e[K${CYAN}Нажмите CTRL+C для выхода.${NC}\n"
 
-    sleep 2
+    sleep 1
 done
