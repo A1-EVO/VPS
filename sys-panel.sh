@@ -32,10 +32,10 @@ while true; do
     # --- Steal time (st) ---
     STEAL=$(top -bn1 | grep "Cpu(s)" | sed "s/.* \([0-9.]*\) st.*/\1/")
 
-    # --- Сглаживание CPU по последним 8 значениям ---
+    # --- Сглаживание CPU по последним 5 значениям ---
     CPU_HISTORY+=("$CPU_NUM")
 
-    if [ ${#CPU_HISTORY[@]} -gt 8 ]; then
+    if [ ${#CPU_HISTORY[@]} -gt 5 ]; then
         CPU_HISTORY=("${CPU_HISTORY[@]:1}")
     fi
 
