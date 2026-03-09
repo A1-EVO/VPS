@@ -19,16 +19,35 @@ draw_box() {
     echo -ne "\e[K${MAGENTA}└──────────────────────────────────────────────┘${NC}\n"
 }
 
+# История CPU для сглаживания
+CPU_HISTORY=()
+
 while true; do
     # Перемещаем курсор в начало экрана
     tput cup 0 0
 
-    # CPU
+    # CPU (моментальное значение)
     CPU=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8"%"}')
     CPU_NUM=$(echo "$CPU" | tr -d '%')
 
-    if (( $(echo "$CPU_NUM > 80" | bc -l) )); then CPU_COLOR=$RED
-    elif (( $(echo "$CPU_NUM > 50" | bc -l) )); then CPU_COLOR=$YELLOW
+    # --- Сглаживание CPU по последним 10 значениям ---
+    CPU_HISTORY+=("$CPU_NUM")
+
+    # Ограничиваем длину массива до 10
+    if [ ${#CPU_HISTORY[@]} -gt 10 ]; then
+        CPU_HISTORY=("${CPU_HISTORY[@]:1}")
+    fi
+
+    # Считаем среднее
+    CPU_SUM=0
+    for v in "${CPU_HISTORY[@]}"; do
+        CPU_SUM=$(echo "$CPU_SUM + $v" | bc)
+    done
+    CPU_AVG=$(echo "scale=1; $CPU_SUM / ${#CPU_HISTORY[@]}" | bc)
+
+    # Цвет CPU по среднему значению
+    if (( $(echo "$CPU_AVG > 80" | bc -l) )); then CPU_COLOR=$RED
+    elif (( $(echo "$CPU_AVG > 50" | bc -l) )); then CPU_COLOR=$YELLOW
     else CPU_COLOR=$GREEN
     fi
 
@@ -55,7 +74,7 @@ while true; do
     # Панель
     draw_box "A1 RETRO SYSTEM PANEL"
 
-    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU}${NC}\n"
+    echo -ne "\e[K${BLUE}CPU Load:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC}\n"
     echo -ne "\e[K${BLUE}RAM Usage:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
     echo -ne "\e[K${BLUE}Disk Usage:${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
