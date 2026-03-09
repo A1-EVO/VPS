@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Очистка экрана
+tput clear
+
 # Цвета
 RED="\e[31m"
 GREEN="\e[32m"
