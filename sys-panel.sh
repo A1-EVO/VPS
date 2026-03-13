@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Проверка наличия bc, если нет — устанавливаем автоматически
+if ! command -v bc &>/dev/null; then
+    echo "Пакет bc не найден. Устанавливаю..."
+    sudo apt update -y >/dev/null 2>&1
+    sudo apt install -y bc >/dev/null 2>&1
+    echo "bc установлен."
+fi
+
 # Очистка экрана один раз
 tput clear
 
@@ -25,14 +33,13 @@ CPU_HISTORY=()
 while true; do
     tput cup 0 0
 
-    # --- CPU: правильный парсинг idle ---
+    # --- CPU ---
     IDLE=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\) id.*/\1/")
     CPU_NUM=$(echo "100 - $IDLE" | bc)
 
-    # --- Steal time (st) ---
+    # --- Steal time ---
     STEAL=$(top -bn1 | grep "Cpu(s)" | sed "s/.* \([0-9.]*\) st.*/\1/")
 
-    # --- Цвет для st ---
     if (( $(echo "$STEAL > 5" | bc -l) )); then
         STEAL_COLOR=$RED
     elif (( $(echo "$STEAL > 2" | bc -l) )); then
@@ -41,9 +48,8 @@ while true; do
         STEAL_COLOR=$GREEN
     fi
 
-    # --- Сглаживание CPU по последним 5 значениям ---
+    # --- Сглаживание ---
     CPU_HISTORY+=("$CPU_NUM")
-
     if [ ${#CPU_HISTORY[@]} -gt 5 ]; then
         CPU_HISTORY=("${CPU_HISTORY[@]:1}")
     fi
@@ -54,7 +60,6 @@ while true; do
     done
     CPU_AVG=$(echo "scale=1; $CPU_SUM / ${#CPU_HISTORY[@]}" | bc)
 
-    # Цвет CPU
     if (( $(echo "$CPU_AVG > 80" | bc -l) )); then CPU_COLOR=$RED
     elif (( $(echo "$CPU_AVG > 50" | bc -l) )); then CPU_COLOR=$YELLOW
     else CPU_COLOR=$GREEN
@@ -80,12 +85,11 @@ while true; do
     else DISK_COLOR=$GREEN
     fi
 
-    # Панель
     draw_box "A1 RETRO SYSTEM PANEL"
 
     echo -ne "\e[K${BLUE}Процессор:${NC}      ${CPU_COLOR}${CPU_AVG}%${NC} / ${STEAL_COLOR}${STEAL} ограничение CPU${NC}\n"
     echo -ne "\e[K${BLUE}Оперативка:${NC}     ${RAM_COLOR}${RAM_USED}MB / ${RAM_TOTAL}MB (${RAM_PERC}%)${NC}\n"
-    echo -ne "\e[K${BLUE}Память:     ${NC}    ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
+    echo -ne "\e[K${BLUE}Память:${NC}         ${DISK_COLOR}${DISK_USED} / ${DISK_TOTAL} (${DISK_PERC}%)${NC}\n"
 
     echo -ne "\n\e[K${CYAN}Нажмите CTRL+C для выхода.${NC}\n"
 
