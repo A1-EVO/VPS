@@ -17,6 +17,11 @@ performance_status() {
     /usr/local/vps-menu/sys-panel.sh
 }
 
+install_proxy() {
+    echo -e "${GREEN}Устанавливаю proxy...${NC}"
+    bash <(curl -Ls "https://raw.githubusercontent.com/A1-EVO/VPS/main/Proxy.sh?$(date +%s)-$RANDOM")
+}
+
 install_3xui() {
     echo -e "${GREEN}Устанавливаю 3x-ui...${NC}"
     bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
@@ -61,6 +66,7 @@ while true; do
     echo -e "${GREEN}=== VPS A1 MENU ===${NC}"
     echo "1) Обновить все репозитории"
     echo "2) Диспечер нагрузки"
+    echo "3) Установить Proxy Telegram"
     echo "12) Установить 3x-ui"
     echo "13) Открыть меню 3x-ui"
     echo "14) Удалить 3x-ui"
@@ -73,6 +79,7 @@ while true; do
     case "$choice" in
         1) update_repos ;;
         2) performance_status ;;
+        3) install_proxy ;;
         12) install_3xui ;;
         13) open_3xui ;;
         98) update_script ;;
