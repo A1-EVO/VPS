@@ -43,6 +43,12 @@ update_script() {
 
     chmod +x /usr/local/vps-menu/vps-menu.sh
 
+    # Качаем панель ретро
+    curl -L "https://raw.githubusercontent.com/A1-EVO/VPS/main/sys-panel.sh?$(date +%s)-$RANDOM" \
+    -o "$INSTALL_DIR/sys-panel.sh"
+    # Делаем исполняемым
+    chmod +x "$INSTALL_DIR/sys-panel.sh"
+
     echo -e "${GREEN}Скрипт обновлён!${NC}"
     echo
     read -p "Нажмите Enter для перезапуска меню..."
